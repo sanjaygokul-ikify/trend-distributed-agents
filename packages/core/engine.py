@@ -33,6 +33,8 @@ class Engine:
         if task_id not in self.tasks:
             raise TaskAssignmentError(f"Task with id {task_id} does not exist")
         task = self.tasks[task_id]
+        if not self.memory_system:
+            raise ValueError("Memory system is not initialized")
         data = self.memory_system.retrieve_data(task.data_id)
         logger.info(f"Retrieved data for task with id {task_id}")
         return data
@@ -41,6 +43,10 @@ class Engine:
         if task_id not in self.tasks:
             raise TaskAssignmentError(f"Task with id {task_id} does not exist")
         task = self.tasks[task_id]
+        if not self.memory_system:
+            raise ValueError("Memory system is not initialized")
+        if not self.reasoning_engine:
+            raise ValueError("Reasoning engine is not initialized")
         data = self.retrieve_data(task_id)
         inference_result = self.reasoning_engine.perform_inference(data)
         logger.info(f"Performed inference for task with id {task_id}")
