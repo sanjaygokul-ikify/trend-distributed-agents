@@ -1,0 +1,9 @@
+agents:
+  - name: Agent 1
+    type: autonomous
+  - name: Agent 2
+    type: autonomous
+memory_system:
+  type: persistent
+reasoning_engine:
+  type: inference
