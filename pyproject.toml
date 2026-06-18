@@ -1,0 +1,10 @@
+[tool.poetry]
+name = "distributed-agents"
+description = "A distributed multi-agent orchestration framework"
+version = "1.0.0"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.dev-dependencies]
+test = "^1.0.0"
