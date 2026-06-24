@@ -47,7 +47,11 @@ class Engine:
             raise ValueError("Memory system is not initialized")
         if not self.reasoning_engine:
             raise ValueError("Reasoning engine is not initialized")
-        data = self.retrieve_data(task_id)
-        inference_result = self.reasoning_engine.perform_inference(data)
-        logger.info(f"Performed inference for task with id {task_id}")
-        return inference_result
+        try:
+            data = self.retrieve_data(task_id)
+            inference_result = self.reasoning_engine.perform_inference(data)
+            logger.info(f"Performed inference for task with id {task_id}")
+            return inference_result
+        except Exception as e:
+            logger.error(f"Error performing inference for task {task_id}: {e}")
+            raise TaskAssignmentError(f"Error performing inference for task {task_id}: {e}")
