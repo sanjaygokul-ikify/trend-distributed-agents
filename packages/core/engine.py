@@ -35,9 +35,13 @@ class Engine:
         task = self.tasks[task_id]
         if not self.memory_system:
             raise ValueError("Memory system is not initialized")
-        data = self.memory_system.retrieve_data(task.data_id)
-        logger.info(f"Retrieved data for task with id {task_id}")
-        return data
+        try:
+            data = self.memory_system.retrieve_data(task.data_id)
+            logger.info(f"Retrieved data for task with id {task_id}")
+            return data
+        except Exception as e:
+            logger.error(f"Error retrieving data for task {task_id}: {e}")
+            raise TaskAssignmentError(f"Error retrieving data for task {task_id}: {e}")
 
     def perform_inference(self, task_id: str) -> Dict:
         if task_id not in self.tasks:
