@@ -77,5 +77,7 @@ class Engine:
             pass
 
         def perform_inference(self, data: Dict) -> Dict:
+            if not isinstance(data, dict):
+                raise ValueError("Data must be a dictionary")
             # placeholder implementation for reasoning engine
             return {"result": "inference performed"}
