@@ -31,3 +31,18 @@ class TestCore(unittest.TestCase):
         task_id = engine.assign_task(agent_id, Task('Test Task', 'Test Description', 'test_data_id'))
         inference_result = engine.perform_inference(task_id)
         self.assertEqual(inference_result, {'result': 'inference performed'})
+
+    def test_retrieve_data_with_nonexistent_task_id(self):
+        engine = Engine()
+        engine.memory_system = Engine.MemorySystem()
+        engine.memory_system.store_data('test_data_id', {'key': 'value'})
+        with self.assertRaises(TaskAssignmentError):
+            engine.retrieve_data('nonexistent_task_id')
+
+    def test_perform_inference_with_nonexistent_task_id(self):
+        engine = Engine()
+        engine.memory_system = Engine.MemorySystem()
+        engine.memory_system.store_data('test_data_id', {'key': 'value'})
+        engine.reasoning_engine = Engine.ReasoningEngine()
+        with self.assertRaises(TaskAssignmentError):
+            engine.perform_inference('nonexistent_task_id')
